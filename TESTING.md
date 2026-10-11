@@ -34,11 +34,11 @@ và diff không được in vào báo cáo. Cấu hình workspace thật không 
 ## Kiểm tra phát hành
 
 - MIT license; SECURITY.md, CONTRIBUTING.md, README dùng ví dụ chung.
-- Tarball chỉ có runtime dist, config mẫu, script startup, README, SECURITY và LICENSE.
+- Tarball có runtime dist, config mẫu, script startup, README tiếng Việt/Anh, SECURITY và LICENSE.
 - Không chứa config thật, tests fixtures, tunnel profile, credentials hay node_modules.
 - Bin có shebang; cài local và gọi MCP thành công, không phụ thuộc source tree.
-- CI Windows/Linux đã được thêm; chưa chạy trên GitHub vì chưa publish repository.
-- Chưa publish GitHub/npm và chưa xác nhận package name khả dụng.
+- CI Windows/Linux chạy trên GitHub cho mỗi lần push và pull request. Xem [kết quả CI](https://github.com/thminh176/mcp-project-assistant/actions/workflows/ci.yml).
+- Repository đã được công khai trên [GitHub](https://github.com/thminh176/mcp-project-assistant) ngày 12/10/2026. Chưa publish npm hay xác nhận package name khả dụng.
 - Không cấu hình tunnel; chưa kiểm thử ChatGPT end-to-end. Tunnel đã tạo theo thông
   tin người dùng không được coi là kết nối server đã xác minh.
 

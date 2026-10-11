@@ -5,10 +5,7 @@ release is maintained. Do not expose the HTTP listener publicly.
 
 ## Reporting
 
-Use GitHub Security Advisories (Security → Report a vulnerability) when enabled.
-If unavailable, contact the repository maintainer privately through a channel on
-their profile. Never post credentials, customer source or private paths in public
-issues. Maintainers must enable private vulnerability reporting before publishing.
+Use [GitHub private vulnerability reporting](https://github.com/thminh176/mcp-project-assistant/security/advisories/new) to contact the maintainers. It is enabled for this repository. Never post credentials, customer source or private paths in public issues.
 
 ## Trust boundaries and limitations
 

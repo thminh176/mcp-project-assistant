@@ -1,15 +1,16 @@
 # mcp-project-assistant
 
-MCP Server độc lập bằng TypeScript và SDK MCP chính thức v2. Giúp MCP clients
-hiểu source, chuẩn bị prompt cho Codex local và sửa code khi người dùng yêu cầu.
-Hỗ trợ Windows và workspace WSL. License MIT.
+Một MCP server để bạn đưa source trên máy vào cuộc trò chuyện với AI. Server đọc file, tìm code và lấy Git diff để AI hiểu project hoặc chuẩn bị ngữ cảnh cho Codex local. Khi bạn yêu cầu sửa code, nó tạo bản xem trước rồi áp dụng thay đổi đã duyệt.
 
-Mặc định chỉ đọc, không tự cấp quyền project, không tạo tunnel hay sửa cấu hình
-client. Mỗi tiến trình chỉ phục vụ workspace được người vận hành chọn khi startup.
+Project viết bằng TypeScript, dùng SDK MCP chính thức v2 và chạy độc lập với ứng dụng của bạn. Windows và workspace WSL được hỗ trợ; bộ kiểm thử cũng chạy trên Linux. Phát hành theo license MIT.
+
+Bạn chọn project trong cấu hình trước khi khởi động. Mỗi tiến trình phục vụ đúng một workspace; AI không có tool để tự chuyển sang project khác. Cấu hình mẫu chỉ cho phép đọc. Bạn chủ động bật quyền ghi hoặc thêm lệnh verification khi cần.
+
+[English quickstart](README.en.md) · [Bảo mật](SECURITY.md) · [Đóng góp](CONTRIBUTING.md)
 
 ## Cài từ source
 
-Yêu cầu Node.js 24+, npm; Git nếu dùng git_diff. Clone vào thư mục riêng:
+Cần Node.js 24 trở lên và npm. Cài thêm Git nếu bạn muốn dùng `git_diff`. Mở PowerShell rồi chạy:
 
 ```powershell
 git clone https://github.com/thminh176/mcp-project-assistant.git
@@ -19,9 +20,9 @@ npm.cmd run build
 Copy-Item config/workspaces.example.json config/workspaces.json
 ```
 
-Sửa root tuyệt đối và denyPaths cho dữ liệu nhạy cảm thực tế. Cả hai workspace mẫu
-đều writable=false, verification={}. denyPaths/protectedPaths nhận file hoặc
-thư mục tương đối, không phải glob. Cấu hình thật không được commit.
+Mở `config/workspaces.json`, đặt `root` thành đường dẫn tuyệt đối tới project bạn muốn cho phép đọc. Thêm file hoặc thư mục nhạy cảm vào `denyPaths`. Hai workspace mẫu đều có `writable: false` và `verification: {}`.
+
+`denyPaths` và `protectedPaths` nhận đường dẫn tương đối, không nhận glob. Giữ cấu hình thật ở máy của bạn; file này đã được gitignore.
 
 ```powershell
 node dist/index.js --config config/workspaces.json --workspace project-a --transport stdio
@@ -33,7 +34,7 @@ npm.cmd; script PowerShell và runtime WSL dành cho Windows.
 
 ## Gói npm
 
-Đã có bin và allowlist đóng gói. Chưa xác nhận đã publish lên npm; cài tarball local:
+Repository này chưa được publish lên npm. Nếu muốn cài CLI từ source, bạn có thể tạo tarball rồi cài trên máy:
 
 ```powershell
 npm.cmd pack
@@ -126,10 +127,9 @@ Patch một file, tên khớp path (cho phép a/ và b/), context phải khớp 
 khai báo, không tự tìm vị trí khác. Không có tool xóa file. Từ chối UTF-8 lỗi,
 NUL và surrogate lỗi; giữ UTF-8 BOM. Token không chứng minh người dùng đã duyệt.
 
-Thay nội dung ghi vào cùng file object để giữ Windows ACL/Linux mode/ownership.
-Không crash-atomic: lỗi đĩa/crash có thể để lại nội dung dở. Dùng Git/backup và
-tránh writer đồng thời. Hash không phải transaction liên tiến trình. File mới
-wx không ghi đè. Token nằm trong bộ nhớ, mất khi restart.
+Khi thay nội dung, server ghi vào file đang có để giữ ACL trên Windows và mode/ownership trên Linux. Nếu lỗi đĩa hoặc crash xảy ra giữa lúc ghi, file có thể còn nội dung dở. Hãy dùng Git hoặc backup và tránh để tiến trình khác cùng sửa file.
+
+Hash giúp phát hiện thay đổi sau bước xem trước, nhưng không tạo transaction giữa nhiều tiến trình. File mới được mở ở chế độ exclusive để tránh ghi đè. Token chỉ nằm trong bộ nhớ và mất khi server khởi động lại.
 
 ## Verification
 
