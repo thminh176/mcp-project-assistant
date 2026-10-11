@@ -1,0 +1,20 @@
+{
+  "workspaces": [
+    {
+      "id": "project-a",
+      "root": "C:/Code/project-a",
+      "writable": false,
+      "denyPaths": ["config/private", "src/local-credentials.json"],
+      "protectedPaths": ["package.json", "package-lock.json", "scripts", "eslint.config.js", "tsconfig.json"],
+      "verification": {}
+    },
+    {
+      "id": "project-b",
+      "root": "D:/Code/project-b",
+      "writable": false,
+      "denyPaths": ["private"],
+      "protectedPaths": ["package.json", "package-lock.json", "scripts"],
+      "verification": {}
+    }
+  ]
+}

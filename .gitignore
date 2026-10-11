@@ -1,0 +1,15 @@
+node_modules/
+dist/
+config/workspaces.json
+.env*
+coverage/
+*.log
+.test-runs/
+*.tgz
+.release-check/
+tunnel-client*.yaml
+tunnel-client*.yml
+tunnel-client*.json
+config/tunnel*
+.tunnel*/
+credentials/

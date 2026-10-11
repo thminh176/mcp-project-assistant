@@ -1,0 +1,61 @@
+{
+  "name": "mcp-project-assistant",
+  "version": "1.0.0",
+  "license": "MIT",
+  "bin": {
+    "mcp-project-assistant": "dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "config/workspaces.example.json",
+    "scripts/Start-Mcp.ps1",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "README.en.md"
+  ],
+  "type": "module",
+  "description": "Independent multi-workspace MCP server for Windows",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepack": "npm run build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src tests",
+    "test": "tsx --test tests/*.test.ts",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "^2.3.1",
+    "@modelcontextprotocol/node": "^2.1.1",
+    "@modelcontextprotocol/server": "^2.3.1",
+    "diff": "^9.0.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/diff": "^7.0.2",
+    "@types/node": "^26.6.4",
+    "eslint": "^10.12.0",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thminh176/mcp-project-assistant.git"
+  },
+  "homepage": "https://github.com/thminh176/mcp-project-assistant#readme",
+  "bugs": {
+    "url": "https://github.com/thminh176/mcp-project-assistant/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "typescript",
+    "windows",
+    "wsl",
+    "code-assistant"
+  ]
+}

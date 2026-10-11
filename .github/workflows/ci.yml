@@ -1,0 +1,29 @@
+name: CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm run build
+      - run: npm test
+      - run: npm audit --omit=dev
+      - run: node -e "require('fs').mkdirSync('.release-check/install',{recursive:true})"
+      - run: npm pack --pack-destination .release-check
+      - run: npm install --prefix .release-check/install ./.release-check/mcp-project-assistant-1.0.0.tgz --ignore-scripts
+      - run: node scripts/Check-Package.mjs .release-check/install/node_modules/mcp-project-assistant/dist/index.js
